@@ -106,8 +106,8 @@ function Scroll() {
     const handleRefresh = async () => {
         if (!selectedKeys.length) {
             notification.error({
-                message: "错误",
-                description: "请先选择要刷新的地址",
+                message: "incorrect",
+                description: "Please select the address to be refreshed first",
             }, 2);
             return;
         }
@@ -219,13 +219,13 @@ function Scroll() {
             processQueue();
         } catch (error) {
             notification.error({
-                message: "错误",
+                message: "incorrect",
                 description: error.message,
             }, 2);
         } finally {
             setIsLoading(false);
             setSelectedKeys([]);
-            message.success("刷新成功");
+            message.success("Refresh Successful");
         }
     };
 
@@ -264,8 +264,8 @@ function Scroll() {
                 let note = names[addresses.indexOf(address)];
                 if (address.length !== 42) {
                     notification.error({
-                        message: "错误",
-                        description: "请输入正确的地址",
+                        message: "incorrect",
+                        description: "Please enter the correct address",
                     });
                     continue;
                 }
@@ -367,7 +367,7 @@ function Scroll() {
             localStorage.setItem('scroll_addresses', JSON.stringify(newData));
         } catch (error) {
             notification.error({
-                message: "错误",
+                message: "incorrect",
                 description: error.message,
             });
         } finally {
@@ -375,7 +375,7 @@ function Scroll() {
             setBatchProgress(0);
             batchForm.resetFields();
             setSelectedKeys([]);
-            message.success("地址添加成功");
+            message.success("Address added successfully");
         }
     };
 
@@ -408,7 +408,7 @@ function Scroll() {
             const score = await calculateScore(item);
             item.scroll_score = score;
             
-            // 检查是否所有数据的评分都已计算完成
+            // Check if scores have been calculated for all data
             const allScoresCalculated = newData.every(item => item.zk_score !== undefined);
             
             if (allScoresCalculated) {
@@ -427,8 +427,8 @@ function Scroll() {
     const handleDeleteSelected = () => {
         if (!selectedKeys.length) {
             notification.error({
-                message: "错误",
-                description: "请先选择要删除的地址",
+                message: "incorrect",
+                description: "Please select the address to be deleted first",
             }, 2);
             return;
         }
@@ -455,7 +455,7 @@ function Scroll() {
             width: 70,
         },
         {
-            title: "备注",
+            title: "note",
             dataIndex: "name",
             key: "name",
             align: "center",
@@ -463,7 +463,7 @@ function Scroll() {
                 const isEditing = record.key === editingKey;
                 return isEditing ? (
                     <Input
-                        placeholder="请输入备注"
+                        placeholder="Please enter a note"
                         defaultValue={text}
                         onPressEnter={(e) => {
                             record.name = e.target.value;
@@ -623,7 +623,7 @@ function Scroll() {
                       width: 50
                     },
                 {
-                    title: "最后交易",
+                    title: "Final transaction",
                     dataIndex: "scroll_last_tx",
                     key: "scroll_last_tx",
                     align: "center",
@@ -651,7 +651,7 @@ function Scroll() {
                     width: 85
                 },
                 {
-                    title: "官方桥跨链Tx数",
+                    title: "Number of official bridge spanning chain Tx",
                     key: "cross_chain_tx_count_group",
                     children: [
                         {
@@ -674,7 +674,7 @@ function Scroll() {
                     ],
                 },
                 {
-                    title: "官方桥跨链金额",
+                    title: "Official Bridge Crossing Chain Amount",
                     key: "cross_chain_amount_group",
                     children: [
                         {
@@ -696,11 +696,11 @@ function Scroll() {
                     ],
                 },
                 {
-                    title: "活跃统计",
+                    title: "Active Statistics",
                     key: "activity_stats_group",
                     children: [
                         {
-                            title: "日",
+                            title: "day",
                             dataIndex: "dayActivity",
                             key: "dayActivity",
                             align: "center",
@@ -709,7 +709,7 @@ function Scroll() {
                             width: 55
                         },
                         {
-                            title: "周",
+                            title: "weekly",
                             dataIndex: "weekActivity",
                             key: "weekActivity",
                             align: "center",
@@ -718,7 +718,7 @@ function Scroll() {
                             width: 50
                         },
                         {
-                            title: "月",
+                            title: "month",
                             dataIndex: "monthActivity",
                             key: "monthActivity",
                             align: "center",
@@ -726,7 +726,7 @@ function Scroll() {
                             width: 50
                         },
                         {
-                            title: "不同合约",
+                            title: "different contract",
                             dataIndex: "contractActivity",
                             key: "contractActivity",
                             align: "center",
@@ -734,7 +734,7 @@ function Scroll() {
                             width: 85
                         },
                         {
-                            title: "金额(U)",
+                            title: "sum of money(U)",
                             dataIndex: "totalExchangeAmount",
                             key: "totalExchangeAmount",
                             align: "center",
@@ -792,7 +792,7 @@ function Scroll() {
         //     width: 80
         // },
         {
-            title: "评分",
+            title: "score",
             dataIndex: "scroll_score",
             key: "scroll_score",
             align: "center",
@@ -830,7 +830,7 @@ function Scroll() {
             width: 70
         },
         {
-            title: "操作",
+            title: "manipulate",
             key: "action",
             align: "center",
             render: (text, record) => (
@@ -847,16 +847,16 @@ function Scroll() {
     return (
         <div>
             <Content>
-                <Modal title="批量添加地址" open={isBatchModalVisible} onOk={handleBatchOk}
+                <Modal title="Batch Add Addresses" open={isBatchModalVisible} onOk={handleBatchOk}
                        onCancel={handleBatchCancel}
                        okButtonProps={{loading: isLoading}}
-                       okText={"添加地址"}
-                       cancelText={"取消"}
+                       okText={"Add Address"}
+                       cancelText={"abolish"}
                     // style={{zIndex: 3}}
                 >
                     <Form form={batchForm} layout="vertical">
-                        <Form.Item label="地址" name="addresses" rules={[{required: true}]}>
-                            <TextArea placeholder="请输入地址，每行一个  要添加备注时放在地址后以逗号(,)间隔" style={{width: "500px", height: "200px"}}/>
+                        <Form.Item label="address" name="addresses" rules={[{required: true}]}>
+                            <TextArea placeholder="Please enter addresses, one per line. To add a comment, place it after the address and space it with a comma (,)." style={{width: "500px", height: "200px"}}/>
                         </Form.Item>
                     </Form>
                 </Modal>
@@ -956,16 +956,16 @@ function Scroll() {
                                     <Button type="primary" onClick={handleRefresh} loading={isLoading}
                                             size={"large"}
                                             style={{width: "20%"}} icon={<SyncOutlined/>}>
-                                        {isLoading ? "正在刷新" : "刷新选中地址"}
+                                        {isLoading ? "Refreshing" : "Refresh Selected Addresses"}
                                     </Button>
                                     <Button type="primary" onClick={showBatchModal} size={"large"}
                                             style={{width: "20%"}}
                                             icon={<UploadOutlined/>}
                                             loading={batchloading}
                                     >
-                                        {batchloading ? `添加中 进度:(${batchProgress}/${batchLength})` : "添加地址"}
+                                        {batchloading ? `Adding Progress:(${batchProgress}/${batchLength})` : "Add Address"}
                                     </Button>
-                                    <Popconfirm title={"确认删除" + selectedKeys.length + "个地址？"}
+                                    <Popconfirm title={"Confirm deletion" + selectedKeys.length + "addresses？"}
                                                 onConfirm={handleDeleteSelected}>
                                         <Button type="primary" danger size={"large"}
                                                 style={{width: "20%"}} icon={<DeleteOutlined/>}>
